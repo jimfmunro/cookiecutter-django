@@ -35,14 +35,14 @@ Deployment
     heroku run python {{cookiecutter.repo_name}}/manage.py migrate --settings=config.settings
     heroku run python {{cookiecutter.repo_name}}/manage.py collectstatic --settings=config.settings
 
-_Note:_
+**Note:**
 
 * I had issues dealing with memcache on heroku so I gave up due to time contraints and decided to just use locMem caching.
 * Also, wanted to use dj-static for serving assets but could not get that working either [see issue](https://github.com/kennethreitz/dj-static/issues/11)
 * Just stuck with AWS since I already had it. Unless you are using SSL, keep the SECURE-type settings set to false.
 
 
-### Run this script: (TODO - automate this)
+**Run this script: (TODO - automate this)**
 
 .. code-block:: python
 
