@@ -9,6 +9,8 @@ LICENSE: BSD
 Deployment
 ------------
 
+.. code-block:: python
+
     heroku create
     heroku addons:add heroku-postgresql:dev
     heroku addons:add pgbackups
@@ -41,6 +43,8 @@ _Note:_
 
 
 ### Run this script: (TODO - automate this)
+
+.. code-block:: python
 
     heroku run python <app>/manage.py shello --settings=config.settings
 
