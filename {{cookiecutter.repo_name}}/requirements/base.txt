@@ -7,6 +7,7 @@ django-secure==1.0
 django-cache-url==0.6.0
 dj-database-url==0.2.2
 
+
 # Forms
 django-braces==1.2.2
 django-crispy-forms==1.4.0
@@ -15,7 +16,7 @@ django-floppyforms==1.1
 # Models
 South==0.8.2
 # hack so django-model-utils doesn't override Django 1.6b4 install
-git+git://github.com/pydanny/django-model-utils@d71bf2db7581d91dcc8e0a66fd4859eb8969d256
+https://github.com/pydanny/django-model-utils@d71bf2db7581d91dcc8e0a66fd4859eb8969d256
 
 
 # images
@@ -37,3 +38,8 @@ django-avatar==2.0
 
 
 # Your custom requirements go here
+dj-email-url==0.0.1
+
+# use unreleased version to also serve media Mediacling 
+https@github.com:kennethreitz/dj-static.git@8c9f384a7a0eed48556bf7d85ae5f25f23845ebc
+
