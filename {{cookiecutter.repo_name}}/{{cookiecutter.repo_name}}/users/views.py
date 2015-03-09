@@ -13,17 +13,14 @@ from django.views.generic import ListView
 from braces.views import LoginRequiredMixin
 
 # Import the form from users/forms.py
-from .forms import UserCreationForm, UserChangeForm
+from .forms import UserUpdateForm
 
 # Import the customized User model
 from .models import User
 
-
-class UserCreateView(LoginRequiredMixin, CreateView):
-    model = User
-
 class UserDetailView(LoginRequiredMixin, DetailView):
     model = User
+    context_object_name = 'user'
     # These next two lines tell the view to index lookups by email
     slug_field = "email"
     slug_url_kwarg = "email"
@@ -34,28 +31,25 @@ class UserRedirectView(LoginRequiredMixin, RedirectView):
 
     def get_redirect_url(self):
         return reverse("users:detail",
-                       kwargs={"username": self.request.user.username})
+                       kwargs={"email": self.request.user.email})
+
+class UserListView(LoginRequiredMixin, ListView):
+    model = User
+    # These next two lines tell the view to index lookups by email
+    slug_field = "email"
+    slug_url_kwarg = "email"
 
 
 class UserUpdateView(LoginRequiredMixin, UpdateView):
-
-    form_class = UserChangeForm
-
     # we already imported User in the view code above, remember?
     model = User
+    form_class = UserUpdateForm
 
     # send the user back to their own page after a successful update
     def get_success_url(self):
         return reverse("users:detail",
-                       kwargs={"username": self.request.user.username})
+                       kwargs={"email": self.request.user.email})
 
     def get_object(self):
         # Only get the User record for the user making the request
-        return User.objects.get(username=self.request.user.username)
-
-
-class UserListView(LoginRequiredMixin, ListView):
-    model = User
-    # These next two lines tell the view to index lookups by username
-    slug_field = "username"
-    slug_url_kwarg = "username"
+        return User.objects.get(email=self.request.user.email)

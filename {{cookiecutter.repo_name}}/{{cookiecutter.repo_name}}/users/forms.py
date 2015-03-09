@@ -31,3 +31,12 @@ class UserChangeForm(UserChangeForm):
     class Meta:
         model = User
         fields = ('email',)
+
+class UserUpdateForm(forms.ModelForm):
+    """A form for updating user by the user. Password UserChangeForm
+    handled by allauth, or similar app default
+    """
+
+    class Meta:
+        model = User
+        fields = ('email', 'first_name', 'last_name',)
