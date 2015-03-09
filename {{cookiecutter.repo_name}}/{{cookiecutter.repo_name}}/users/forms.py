@@ -1,14 +1,33 @@
-# -*- coding: utf-8 -*-
-from django import forms
+from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 
 from .models import User
 
 
-class UserForm(forms.ModelForm):
+class UserCreationForm(UserCreationForm):
+    """
+    A form that creates a user, with no privileges, from the given email and
+    password.
+    """
+
+    def __init__(self, *args, **kargs):
+        super(UserCreationForm, self).__init__(*args, **kargs)
+        del self.fields['username']
 
     class Meta:
-        # Set this form to use the User model.
         model = User
+        fields = ('email',)
 
-        # Constrain the UserForm to just these fields.
-        fields = ("first_name", "last_name")
+
+class UserChangeForm(UserChangeForm):
+    """A form for updating users. Includes all the fields on
+    the user, but replaces the password field with admin's
+    password hash display field.
+    """
+
+    def __init__(self, *args, **kargs):
+        super(UserChangeForm, self).__init__(*args, **kargs)
+        del self.fields['username']
+
+    class Meta:
+        model = User
+        fields = ('email',)

@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 from django.conf.urls import patterns, url
 
-from users import views
+from email_user import views
 
-urlpatterns = patterns('',
+urlpatterns = [
     # URL pattern for the UserListView  # noqa
     url(
         regex=r'^$',
@@ -28,4 +28,4 @@ urlpatterns = patterns('',
         view=views.UserUpdateView.as_view(),
         name='update'
     ),
-)
+]

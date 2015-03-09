@@ -1,33 +1,24 @@
-# -*- coding: utf-8 -*-
-from django import forms
 from django.contrib import admin
-from django.contrib.auth.forms import UserCreationForm, UserChangeForm
-from django.contrib.auth.admin import UserAdmin as AuthUserAdmin
+from django.contrib.auth.admin import UserAdmin as djUserAdmin
 
+from .forms import UserChangeForm, UserCreationForm
 from .models import User
 
+class UserAdmin(djUserAdmin):
+    fieldsets = (
+        (None, {'fields': ('email', 'first_name', 'last_name', 'password', 'last_login', 'date_joined',)}),
+    )
+    list_display = ('email', 'first_name', 'last_name', 'is_superuser', 'is_active')
+    ordering = ('email',)
 
-class MyUserChangeForm(UserChangeForm):
-    class Meta(UserChangeForm.Meta):
-        model = User
+    add_fieldsets = (
+        (None, {
+            'classes': ('wide',),
+            'fields': ('email', 'first_name', 'last_name', 'password1', 'password2')}
+        ),
+    )
 
-
-class MyUserCreationForm(UserCreationForm):
-    class Meta(UserCreationForm.Meta):
-        model = User
-
-    def clean_username(self):
-        username = self.cleaned_data["username"]
-        try:
-            User.objects.get(username=username)
-        except User.DoesNotExist:
-            return username
-        raise forms.ValidationError(self.error_messages['duplicate_username'])
-
-
-class UserAdmin(AuthUserAdmin):
-    form = MyUserChangeForm
-    add_form = MyUserCreationForm
-
+    form = UserChangeForm
+    add_form = UserCreationForm
 
 admin.site.register(User, UserAdmin)

@@ -5,6 +5,7 @@ from django.core.urlresolvers import reverse
 # view imports
 from django.views.generic import DetailView
 from django.views.generic import RedirectView
+from django.views.generic import CreateView
 from django.views.generic import UpdateView
 from django.views.generic import ListView
 
@@ -12,17 +13,20 @@ from django.views.generic import ListView
 from braces.views import LoginRequiredMixin
 
 # Import the form from users/forms.py
-from .forms import UserForm
+from .forms import UserCreationForm, UserChangeForm
 
 # Import the customized User model
 from .models import User
 
 
+class UserCreateView(LoginRequiredMixin, CreateView):
+    model = User
+
 class UserDetailView(LoginRequiredMixin, DetailView):
     model = User
-    # These next two lines tell the view to index lookups by username
-    slug_field = "username"
-    slug_url_kwarg = "username"
+    # These next two lines tell the view to index lookups by email
+    slug_field = "email"
+    slug_url_kwarg = "email"
 
 
 class UserRedirectView(LoginRequiredMixin, RedirectView):
@@ -35,7 +39,7 @@ class UserRedirectView(LoginRequiredMixin, RedirectView):
 
 class UserUpdateView(LoginRequiredMixin, UpdateView):
 
-    form_class = UserForm
+    form_class = UserChangeForm
 
     # we already imported User in the view code above, remember?
     model = User
