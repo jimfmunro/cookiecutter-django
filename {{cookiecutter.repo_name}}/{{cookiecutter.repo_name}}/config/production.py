@@ -60,17 +60,21 @@ class Production(Common):
     # STORAGE CONFIGURATION
     # See: http://django-storages.readthedocs.org/en/latest/index.html
     INSTALLED_APPS += (
-        'whitenoise==1.0.6',
+        'whitenoise',
     )
 
     # See: http://django-storages.readthedocs.org/en/latest/backends/amazon-S3.html#settings
     # STATICFILES_STORAGE = DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
 
+    # Simplified static file serving.
+    # https://warehouse.python.org/project/whitenoise/
+    STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
+
     # see: https://github.com/antonagestam/collectfast
     # INSTALLED_APPS += ('collectfast', )
 
     # See: https://docs.djangoproject.com/en/dev/ref/settings/#static-url
-    # STATIC_URL = '/static/'
+    # STATIC_URL = '/static/' configured in common settings
     # END STORAGE CONFIGURATION
 
     # EMAIL
