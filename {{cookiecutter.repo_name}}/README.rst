@@ -16,9 +16,6 @@ For configuration purposes, the following table maps the '{{cookiecutter.project
 ======================================= =========================== ============================================== ===========================================
 Environment Variable                    Django Setting              Development Default                            Production Default
 ======================================= =========================== ============================================== ===========================================
-DJANGO_AWS_ACCESS_KEY_ID                AWS_ACCESS_KEY_ID           n/a                                            raises error
-DJANGO_AWS_SECRET_ACCESS_KEY            AWS_SECRET_ACCESS_KEY       n/a                                            raises error
-DJANGO_AWS_STORAGE_BUCKET_NAME          AWS_STORAGE_BUCKET_NAME     n/a                                            raises error
 DJANGO_CACHES                           CACHES                      locmem                                         memcached
 DJANGO_DATABASES                        DATABASES                   See code                                       See code
 DJANGO_DEBUG                            DEBUG                       True                                           False
@@ -84,7 +81,7 @@ It's time to write the code!!!
 Deployment
 ------------
 
-It is possible to deploy to Heroku or to your own server by using Dokku, an open source Heroku clone. 
+It is possible to deploy to Heroku or to your own server by using Dokku, an open source Heroku clone.
 
 Heroku
 ^^^^^^
@@ -113,7 +110,7 @@ Dokku
 ^^^^^
 
 You need to make sure you have a server running Dokku with at least 1GB of RAM. Backing services are
-added just like in Heroku however you must ensure you have the relevant Dokku plugins installed. 
+added just like in Heroku however you must ensure you have the relevant Dokku plugins installed.
 
 .. code-block:: bash
 
