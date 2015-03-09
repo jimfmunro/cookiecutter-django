@@ -9,6 +9,14 @@ Production Configurations
 '''
 from configurations import values
 
+# See: http://django-storages.readthedocs.org/en/latest/backends/amazon-S3.html#settings
+try:
+    from S3 import CallingFormat
+    AWS_CALLING_FORMAT = CallingFormat.SUBDOMAIN
+except ImportError:
+    # TODO: Fix this where even if in Dev this class is called.
+    pass
+
 from .common import Common
 
 
@@ -60,8 +68,27 @@ class Production(Common):
     # STORAGE CONFIGURATION
     # See: http://django-storages.readthedocs.org/en/latest/index.html
     INSTALLED_APPS += (
+        'storages',
         'whitenoise',
     )
+
+    # See: http://django-storages.readthedocs.org/en/latest/backends/amazon-S3.html#settings
+    AWS_ACCESS_KEY_ID = values.SecretValue()
+    AWS_SECRET_ACCESS_KEY = values.SecretValue()
+    AWS_STORAGE_BUCKET_NAME = values.SecretValue()
+    AWS_AUTO_CREATE_BUCKET = True
+    AWS_QUERYSTRING_AUTH = False
+
+    # see: https://github.com/antonagestam/collectfast
+    AWS_PRELOAD_METADATA = True
+    INSTALLED_APPS += ('collectfast', )
+
+    # AWS cache settings, don't change unless you know what you're doing:
+    AWS_EXPIRY = 60 * 60 * 24 * 7
+    AWS_HEADERS = {
+        'Cache-Control': 'max-age=%d, s-maxage=%d, must-revalidate' % (
+            AWS_EXPIRY, AWS_EXPIRY)
+    }
 
     # See: http://django-storages.readthedocs.org/en/latest/backends/amazon-S3.html#settings
     # STATICFILES_STORAGE = DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'

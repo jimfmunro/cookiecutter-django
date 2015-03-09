@@ -4,3 +4,8 @@
 
 gunicorn==19.3.0
 whitenoise==1.0.6
+
+# store media files on s3
+django-storages==1.1.8
+gevent==1.0.1
+boto==2.36.0

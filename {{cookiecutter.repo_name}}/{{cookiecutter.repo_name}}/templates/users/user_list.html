@@ -19,7 +19,7 @@
       <div class="list-group">
           {% for user in user_list %}
             <a href="{% url 'users:detail' user.email %}" class="list-group-item">
-              <h4 class="list-group-item-heading">{% avatar user %} {{ user.username }}</h4>
+              <h4 class="list-group-item-heading">{% avatar user %} {{ user.email }}</h4>
               <p class="list-group-item-text">{{ maker.tagline }}</p>
             </a>
           {% endfor %}

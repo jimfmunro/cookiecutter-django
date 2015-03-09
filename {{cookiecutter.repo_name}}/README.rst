@@ -16,6 +16,9 @@ For configuration purposes, the following table maps the '{{cookiecutter.project
 ======================================= =========================== ============================================== ===========================================
 Environment Variable                    Django Setting              Development Default                            Production Default
 ======================================= =========================== ============================================== ===========================================
+DJANGO_AWS_ACCESS_KEY_ID                AWS_ACCESS_KEY_ID           n/a                                            raises error
+DJANGO_AWS_SECRET_ACCESS_KEY            AWS_SECRET_ACCESS_KEY       n/a                                            raises error
+DJANGO_AWS_STORAGE_BUCKET_NAME          AWS_STORAGE_BUCKET_NAME     n/a                                            raises error
 DJANGO_CACHES                           CACHES                      locmem                                         memcached
 DJANGO_DATABASES                        DATABASES                   See code                                       See code
 DJANGO_DEBUG                            DEBUG                       True                                           False
@@ -30,6 +33,7 @@ DJANGO_SESSION_COOKIE_HTTPONLY          SESSION_COOKIE_HTTPONLY     n/a         
 DJANGO_SESSION_COOKIE_SECURE            SESSION_COOKIE_SECURE       n/a                                            False
 ======================================= =========================== ============================================== ===========================================
 
+* TODO: Add vendor-added settings in another table
 * TODO: Add vendor-added settings in another table
 
 Getting up and running
@@ -73,12 +77,15 @@ Run these commands to deploy the project to Heroku:
     heroku create --buildpack https://github.com/heroku/heroku-buildpack-python
     heroku addons:add heroku-postgresql:dev
     heroku addons:add pgbackups:auto-month
+    heroku addons:add sendgrid:starter
     heroku addons:add memcachier:dev
     heroku pg:promote DATABASE_URL
     heroku config:set DJANGO_CONFIGURATION=Production
     heroku config:set DJANGO_SECRET_KEY=RANDOM_SECRET_KEY_HERE
+    heroku config:set DJANGO_AWS_ACCESS_KEY_ID=YOUR_AWS_ID_HERE
+    heroku config:set DJANGO_AWS_SECRET_ACCESS_KEY=YOUR_AWS_SECRET_ACCESS_KEY_HERE
+    heroku config:set DJANGO_AWS_STORAGE_BUCKET_NAME=YOUR_AWS_S3_BUCKET_NAME_HERE
     git push heroku master
     heroku run python {{cookiecutter.repo_name}}/manage.py migrate
     heroku run python {{cookiecutter.repo_name}}/manage.py createsuperuser
     heroku open
-
