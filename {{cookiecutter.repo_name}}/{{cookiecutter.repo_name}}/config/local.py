@@ -42,6 +42,3 @@ class Local(Common):
     # end django-debug-toolbar
 
     # Your local stuff: Below this line define 3rd party library settings
-
-    # this works in dev?
-    # STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
